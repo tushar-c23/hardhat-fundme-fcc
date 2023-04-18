@@ -44,19 +44,19 @@ contract FundMe {
         s_priceFeed = AggregatorV3Interface(priceFeedAddress);
     }
 
-    // receive() external payable {
-    //     fund();
-    // }
-    // fallback() external payable {
-    //     fund();
-    // }
+    receive() external payable {
+        fund();
+    }
+    fallback() external payable {
+        fund();
+    }
 
     /**
      * @notice This function is to fund the contract
      * @dev This implements price feeds as our library
      */
     function fund() public payable {
-        require(msg.value.getConversionRate(s_priceFeed) >= MINIMUM_USD, "You need to spend more ETH!");
+        // require(msg.value.getConversionRate(s_priceFeed) >= MINIMUM_USD, "You need to spend more ETH!");
         // require(PriceConverter.getConversionRate(msg.value) >= MINIMUM_USD, "You need to spend more ETH!");
         s_addressToAmountFunded[msg.sender] += msg.value;
         s_funders.push(msg.sender);
